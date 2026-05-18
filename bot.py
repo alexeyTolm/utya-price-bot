@@ -107,7 +107,7 @@ def send_telegram_message(text):
 
 def send_ad_for_utya():
     """Отправляет рекламу UTYA раз в 30 минут"""
-    text = "🔥 Торгуй UTYA: https://t.me/utya_price"
+    text = "🔥 Торгуй MTONGA: @mtonga_price"
     send_telegram_message(text)
     # Запускаем следующий запуск через 30 минут (1800 секунд)
     threading.Timer(1800, send_ad_for_utya).start()
