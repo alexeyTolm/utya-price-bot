@@ -97,19 +97,21 @@ def send_telegram_message(text):
         r = requests.post(url, json=payload, timeout=10)
         r.raise_for_status()
         logging.info("✅ Сообщение отправлено")
-        
+        return True
     except Exception as e:
         logging.error(f"❌ Ошибка отправки: {e}")
         if 'r' in locals():
             logging.error(f"Ответ: {r.text}")
+        return False
 
-def send_ad_for_mtonga():
-    """Отправляет рекламу MTONGA раз в 30 минут"""
-    text = "🔥 Торгуй MTONGA: @mtonga_price"
+
+def send_ad_for_utya():
+    """Отправляет рекламу UTYA раз в 30 минут"""
+    text = "🔥 Торгуй UTYA: https://t.me/utya_price"
     send_telegram_message(text)
-    threading.Timer(1800, send_ad_for_mtonga).start()
+    # Запускаем следующий запуск через 30 минут (1800 секунд)
+    threading.Timer(1800, send_ad_for_utya).start()
 
-send_ad_for_mtonga()
 
 if __name__ == "__main__":
     logging.info("🚀 Бот запущен")
@@ -122,6 +124,9 @@ if __name__ == "__main__":
     if not CHANNEL_ID:
         logging.error("❌ CHANNEL_ID не найден в .env файле!")
         exit(1)
+    
+    # Запускаем рекламный поток (первый запуск через 10 секунд после старта)
+    threading.Timer(10, send_ad_for_utya).start()
     
     # Основной цикл
     while True:
