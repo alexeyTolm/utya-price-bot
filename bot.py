@@ -3,6 +3,7 @@ import time
 import logging
 from dotenv import load_dotenv
 import requests
+import threading
 
 load_dotenv()
 
@@ -102,6 +103,13 @@ def send_telegram_message(text):
         if 'r' in locals():
             logging.error(f"Ответ: {r.text}")
 
+def send_ad_for_mtonga():
+    """Отправляет рекламу MTONGA раз в 30 минут"""
+    text = "🔥 Торгуй MTONGA: @mtonga_price"
+    send_telegram_message(text)
+    threading.Timer(1800, send_ad_for_mtonga).start()
+
+send_ad_for_mtonga()
 
 if __name__ == "__main__":
     logging.info("🚀 Бот запущен")
